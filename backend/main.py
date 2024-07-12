@@ -11,9 +11,14 @@ db.init_app(app)
 
 @app.route('/')
 def home():
-    return 'Hola como estas?'
+    latas = Latas.query.all()
+    return render_template('index.html', latas=latas)
 
-@app.route('/latas', methods=['GET'])
+@app.route('/lata/<int:id>')
+def lata_detail(id):
+    lata = Latas.query.get_or_404(id)
+    return render_template('lata.html', lata=lata)
+
 @app.route('/latas', methods=['GET'])
 def get_latas():
     try:

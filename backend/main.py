@@ -19,7 +19,8 @@ def lata_detail(id):
     lata = Latas.query.get_or_404(id)
     return render_template('lata.html', lata=lata)
 
-@app.route('/latas', methods=['GET'])
+
+@app.route('/api/latas', methods=['GET'])
 def get_latas():
     try:
         latas = Latas.query.all()

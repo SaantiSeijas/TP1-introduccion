@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latas de {{ marca.nombre }}</title>
+</head>
+<body>
+    <h1>Latas de {{ marca.nombre }}</h1>
+
+    <!-- Lista de Latas -->
+    <ul id="latas-list">
+        {% for lata in latas %}
+            <li>{{ lata.tamanio }} ml - Precio: ${{ lata.precio }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

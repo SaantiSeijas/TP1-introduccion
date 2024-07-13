@@ -13,10 +13,11 @@ db.init_app(app)
 def home():
     return render_template('index.html')
 
-@app.route('/lata/<int:id>')
-def lata_detail(id):
-    lata = Latas.query.get_or_404(id)
-    return render_template('lata.html', lata=lata)
+@app.route('/marcas/<int:marca_id>')
+def mostrar_latas(marca_id):
+    marca = Marca.query.get_or_404(marca_id)
+    latas = marca.latas
+    return render_template('latas.html', marca=marca, latas=latas)
 
 
 @app.route('/api/marcas', methods=['GET'])

@@ -19,11 +19,18 @@
 
         <button type="submit">Agregar Lata</button>
     </form>
+    
+    <h2>Eliminar Lata por Numero</h1>
+    <form action="/eliminar_lata" method="POST">
+        <label for="lata_id">Nro de la lata a eliminar:</label>
+        <input type="number" id="lata_id" name="lata_id" required><br>
 
+        <button type="submit">Eliminar Lata</button>
+    </form>
 
     <ul>
         {% for lata in latas %}
-            <li>Tamaño: {{ lata.tamanio }}L - Precio: ${{ lata.precio }} - Color: {{ lata.color.nombre }}</li>
+            <li>Nro de lata: {{lata.id}} - Tamaño: {{ lata.tamanio }}L - Precio: ${{ lata.precio }} - Color: {{ lata.color.nombre }}</li>
         {% endfor %}
     </ul>
 

@@ -88,11 +88,31 @@ def agregar_lata():
         print("Error al agregar lata:", error)
         return jsonify({'message': 'Error al agregar lata'}), 500
 
-        
+
+@app.route('/eliminar_lata', methods=['POST'])
+def eliminar_lata():
+    try:
+        # Obtener el ID de la lata a eliminar desde el formulario
+        lata_id = int(request.form.get('lata_id'))
+
+        # Buscar la lata por su ID en la base de datos
+        lata = Latas.query.get(lata_id)
+        if not lata:
+            return jsonify({'message': 'Lata no encontrada'}), 404
+
+        # Eliminar la lata de la sesión y commit a la base de datos
+        db.session.delete(lata)
+        db.session.commit()
+
+        return jsonify({'message': 'Lata eliminada correctamente'}), 200
+    except Exception as error:
+        print("Error al eliminar lata:", error)
+        return jsonify({'message': 'Error al eliminar lata'}), 500
+
+
 @app.route('/agregar_marca', methods=['POST'])
 def agregar_marca():
     try:
-
         nombre = request.form.get('nombre')
         precio_x_litro = request.form.get('precio_x_litro')
 

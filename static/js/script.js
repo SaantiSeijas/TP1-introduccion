@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data => {
                 const latasList = document.getElementById('latas-list');
+                latasList.innerHTML = ''; // Limpiar la lista antes de actualizar
                 data.latas.forEach(lata => {
                     const lataItem = document.createElement('li');
                     lataItem.innerHTML = `<a href="/lata/${lata.id}">${lata.tamanio} - $${lata.precio}</a>`;

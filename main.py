@@ -12,7 +12,7 @@ db.init_app(app)
 @app.route('/')
 def home():
     return render_template('index.html')
-    
+
 @app.route('/lata/<int:id>')
 def lata_detail(id):
     lata = Latas.query.get_or_404(id)
@@ -37,6 +37,27 @@ def get_latas():
     except Exception as error:
         print("Error", error)
         return jsonify({'message': 'Internal server error'}), 500
+
+
+@app.route('/agregar_lata', methods=['POST'])
+def agregar_lata():
+    try:
+        # Obtener los datos del formulario
+        tamanio = request.form.get('tamanio')
+        precio = request.form.get('precio')
+
+        # Crear una nueva lata
+        nueva_lata = Latas(tamanio=tamanio, precio=precio)
+
+        # Agregar la nueva lata a la sesión y commit a la base de datos
+        db.session.add(nueva_lata)
+        db.session.commit()
+
+        return redirect(url_for('home'))
+    except Exception as error:
+        print("Error al agregar lata:", error)
+        return jsonify({'message': 'Error al agregar lata'}), 500
+
 
 if __name__ == '__main__':
     with app.app_context():

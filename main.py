@@ -19,6 +19,24 @@ def lata_detail(id):
     return render_template('lata.html', lata=lata)
 
 
+@app.route('/api/marcas', methods=['GET'])
+def get_marcas():
+    try:
+        marcas = Marca.query.all()
+        marcas_data = []
+        for marca in marcas:
+            marca_data = {
+                'id': marca.id,
+                'nombre': marca.nombre,
+                'precio_x_litro': marca.precio_x_litro,
+            }
+            marcas_data.append(marca_data)
+        return jsonify({'marcas': marcas_data})
+    except Exception as error:
+        print("Error", error)
+        return jsonify({'message': 'Internal server error'}), 500
+
+
 @app.route('/api/latas', methods=['GET'])
 def get_latas():
     try:
@@ -57,6 +75,22 @@ def agregar_lata():
     except Exception as error:
         print("Error al agregar lata:", error)
         return jsonify({'message': 'Error al agregar lata'}), 500
+
+@app.route('/agregar_marca', methods=['POST'])
+def agregar_marca():
+    try:
+        lata_id = request.form.get('lata_id')
+        nombre = request.form.get('nombre')
+        precio_x_litro = request.form.get('precio_x_litro')
+
+        nueva_marca = Marca(nombre=nombre, precio_x_litro=precio_x_litro, lata_id=lata_id)
+        db.session.add(nueva_marca)
+        db.session.commit()
+
+        return redirect(url_for('home'))
+    except Exception as error:
+        print("Error al agregar marca:", error)
+        return jsonify({'message': 'Error al agregar marca'}), 500
 
 
 if __name__ == '__main__':

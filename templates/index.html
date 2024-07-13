@@ -7,20 +7,30 @@
 </head>
 <body>
     <h1>Inventario de Pinturera</h1>
+    <ul id="marcas-list">
+        {% for marca in marcas %}
+            <li>{{ marca.nombre }}</li>
+        {% endfor %}
+    </ul>
     <ul id="latas-list">
         <!-- Aquí se cargarán las latas dinámicamente -->
     </ul>
 
-    <h2>Agregar Nueva Lata</h2>
-    <form action="/agregar_lata" method="POST">
-        <label for="tamanio">Tamaño:</label>
-        <input type="text" id="tamanio" name="tamanio" required><br><br>
+    <h2>Agregar Nueva Marca</h2>
+    <form action="/agregar_marca" method="POST">
+        <label for="lata_id">ID de la Lata:</label>
+        <input type="text" id="lata_id" name="lata_id" required><br><br>
 
-        <label for="precio">Precio:</label>
-        <input type="text" id="precio" name="precio" required><br><br>
+        <label for="nombre">Nombre de la Marca:</label>
+        <input type="text" id="nombre" name="nombre" required><br><br>
 
-        <button type="submit">Agregar Lata</button>
+        <label for="precio_x_litro">Precio por Litro:</label>
+        <input type="text" id="precio_x_litro" name="precio_x_litro" required><br><br>
+
+        <button type="submit">Agregar Marca</button>
     </form>
+
     <script src="static/js/script.js"></script>
+
 </body>
 </html>

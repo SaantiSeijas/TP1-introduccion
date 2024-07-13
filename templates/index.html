@@ -13,20 +13,20 @@
                 <h1>Inventario de Pinturería</h1>
                 <div class="col-12 col-md-10 col-lg-6 mx-auto">
                     <h2>Agregar Marca</h2>
-                    <form onsubmit="">
+                    <form action="/agregar_marca" method="POST">
                         <div class="mb-3">
                             <label for="lata_id" class="form-label">ID de la Lata</label>
-                            <input type="text" class="form-control" id="lata_id" required>
+                            <input type="text" id="lata_id" name="lata_id" required>
                         </div>
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre de la Marca</label>
-                            <input type="text" class="form-control" id="nombre" required>
+                            <input type="text" id="nombre" name="nombre" required>
                         </div>
                         <div class="mb-3">
                             <label for="precio_x_litro" class="form-label">Precio por Litro</label>
-                            <input type="text" class="form-control" id="precio_x_litro" required>
+                            <input type="text" id="precio_x_litro" name="precio_x_litro" required>
                         </div>
-                        <button type="submit" class="btn btn-success">Agregar Marca</button>
+                        <button type="submit">Agregar Marca</button>
                     </form>
                 </div>
             </div>

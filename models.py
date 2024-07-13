@@ -10,6 +10,10 @@ class Latas(db.Model):
     tamanio = db.Column(db.Integer, nullable=False)
     precio = db.Column(db.Integer, nullable=False)
 
+        # Relaciones
+    marca = db.relationship('Marca', backref='latas')
+    color = db.relationship('Color', backref='latas')
+
     def __init__(self, marca_id, color_id, tamanio):
         self.marca_id = marca_id
         self.color_id = color_id

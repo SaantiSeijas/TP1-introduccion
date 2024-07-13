@@ -16,7 +16,7 @@ def home():
 @app.route('/marcas/<int:marca_id>')
 def mostrar_latas(marca_id):
     marca = Marca.query.get_or_404(marca_id)
-    latas = marca.latas
+    latas = Latas.query.filter_by(marca_id=marca_id).all()
     return render_template('latas.html', marca=marca, latas=latas)
 
 
@@ -66,11 +66,18 @@ def add_lata():
 def agregar_lata():
     try:
         # Obtener los datos del formulario
-        tamanio = request.form.get('tamanio')
-        precio = request.form.get('precio')
+        tamanio = int(request.form.get('tamanio'))  # Convertir tamaño a entero
+        nombre_color = request.form.get('nombre_color')
+        marca_id = int(request.form.get('marca_id'))  # Convertir marca_id a entero
+
+
+        # Buscar el color por su nombre
+        color = Color.query.filter_by(nombre=nombre_color).first()
+        if not color:
+            return jsonify({'message': 'Color no encontrado'}), 404
 
         # Crear una nueva lata
-        nueva_lata = Latas(tamanio=tamanio, precio=precio)
+        nueva_lata = Latas(marca_id=marca_id, color_id=color.id, tamanio=tamanio)
 
         # Agregar la nueva lata a la sesión y commit a la base de datos
         db.session.add(nueva_lata)
@@ -81,6 +88,7 @@ def agregar_lata():
         print("Error al agregar lata:", error)
         return jsonify({'message': 'Error al agregar lata'}), 500
 
+        
 @app.route('/agregar_marca', methods=['POST'])
 def agregar_marca():
     try:

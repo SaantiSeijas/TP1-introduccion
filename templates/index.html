@@ -36,9 +36,13 @@
             <button type="submit">Eliminar Marca</button>
         </form>
     
-    <ul id="marcas-list">
-        <!-- Aquí se cargarán las latas dinámicamente -->
-    </ul>
+        <ul id="marcas-list">
+            {% for marca in marcas %}
+                <li>
+                    <a href="{{ url_for('mostrar_latas', marca_id=marca.id) }}">{{ marca.nombre }} - ${{ marca.precio_x_litro }} x litro</a>
+                </li>
+            {% endfor %}
+        </ul>
 
 
     <script src="static/js/script.js"></script>

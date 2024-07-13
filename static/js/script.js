@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 marcasList.innerHTML = ''; // Limpiar la lista antes de actualizar
                 data.marcas.forEach(marca => {
                     const marcaItem = document.createElement('li');
-                    marcaItem.innerHTML = `<a href="/marca/${marca.id}">${marca.nombre}</a>`;
+                    marcaItem.innerHTML = `<a href="/marcas/${marca.id}">${marca.nombre}</a>`;
                     marcasList.appendChild(marcaItem);
                 });
             })
@@ -16,25 +16,3 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-document.getElementById('delete-marca-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const nombre = document.getElementById('delete-nombre').value;
-
-    fetch('/api/marcas/delete', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            nombre: nombre
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert(data.message);
-        if (data.message.includes('exitosamente')) {
-            location.reload();
-        }
-    })
-    .catch(error => console.error('Error al eliminar la marca:', error));
-});

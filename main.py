@@ -11,9 +11,8 @@ db.init_app(app)
 
 @app.route('/')
 def home():
-    latas = Latas.query.all()
-    return render_template('index.html', latas=latas)
-
+    return render_template('index.html')
+    
 @app.route('/lata/<int:id>')
 def lata_detail(id):
     lata = Latas.query.get_or_404(id)
@@ -30,32 +29,16 @@ def get_latas():
                 'id': lata.id,
                 'tamanio': lata.tamanio,
                 'precio': lata.precio,
-                'marcas': [],
-                'colores': []
+                'marcas': [{'id': marca.id, 'nombre': marca.nombre, 'precio_x_litro': marca.precio_x_litro} for marca in lata.marcas],
+                'colores': [{'id': color.id, 'nombre': color.nombre} for color in lata.colores]
             }
-            for marca in lata.marcas:
-                marca_data = {
-                    'id': marca.id,
-                    'nombre': marca.nombre
-                }
-                lata_data['marcas'].append(marca_data)
-            for color in lata.colores:
-                color_data = {
-                    'id': color.id,
-                    'nombre': color.nombre
-                }
-                lata_data['colores'].append(color_data)
             latas_data.append(lata_data)
         return jsonify({'latas': latas_data})
     except Exception as error:
         print("Error", error)
         return jsonify({'message': 'Internal server error'}), 500
-        print("Error",error)
-        return jsonify({'message':'Internal server error'}),500
-
-
 
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True)
+    app.run(port=port, debug=True)

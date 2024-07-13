@@ -4,15 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inventario de Pinturera</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
-<body>
-    <h1>Inventario de Pinturera</h1>
- 
+<body data-bs-theme="dark">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Inventario de Pinturería</h1>
+                <a href="/create" class="btn btn-success">Agregar Marca</a>
+            </div>
+        </div>
+    </div>
     <ul id="marcas-list">
         <!-- Aquí se cargarán las latas dinámicamente -->
     </ul>
 
-    <h2>Agregar Nueva Marca</h2>
+    <h4>Agregar Nueva Marca</h4>
     <form action="/agregar_marca" method="POST">
         <label for="lata_id">ID de la Lata:</label>
         <input type="text" id="lata_id" name="lata_id" required><br><br>

@@ -11,7 +11,24 @@
         <div class="row">
             <div class="col">
                 <h1>Inventario de Pinturería</h1>
-                <a href="/create" class="btn btn-success">Agregar Marca</a>
+                <div class="col-12 col-md-10 col-lg-6 mx-auto">
+                    <h2>Agregar Marca</h2>
+                    <form onsubmit="">
+                        <div class="mb-3">
+                            <label for="lata_id" class="form-label">ID de la Lata</label>
+                            <input type="text" class="form-control" id="lata_id" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre de la Marca</label>
+                            <input type="text" class="form-control" id="nombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="precio_x_litro" class="form-label">Precio por Litro</label>
+                            <input type="text" class="form-control" id="precio_x_litro" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Agregar Marca</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -19,19 +36,6 @@
         <!-- Aquí se cargarán las latas dinámicamente -->
     </ul>
 
-    <h4>Agregar Nueva Marca</h4>
-    <form action="/agregar_marca" method="POST">
-        <label for="lata_id">ID de la Lata:</label>
-        <input type="text" id="lata_id" name="lata_id" required><br><br>
-
-        <label for="nombre">Nombre de la Marca:</label>
-        <input type="text" id="nombre" name="nombre" required><br><br>
-
-        <label for="precio_x_litro">Precio por Litro:</label>
-        <input type="text" id="precio_x_litro" name="precio_x_litro" required><br><br>
-
-        <button type="submit">Agregar Marca</button>
-    </form>
 
     <script src="static/js/script.js"></script>
 

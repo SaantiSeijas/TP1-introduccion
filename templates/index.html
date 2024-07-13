@@ -15,10 +15,6 @@
                     <h2>Agregar Marca</h2>
                     <form action="/agregar_marca" method="POST">
                         <div class="mb-3">
-                            <label for="lata_id" class="form-label">ID de la Lata</label>
-                            <input type="text" id="lata_id" name="lata_id" required>
-                        </div>
-                        <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre de la Marca</label>
                             <input type="text" id="nombre" name="nombre" required>
                         </div>
@@ -32,6 +28,14 @@
             </div>
         </div>
     </div>
+        <!-- Formulario para eliminar una marca -->
+        <form action="/eliminar_marca" method="POST">
+            <label for="delete-nombre">Nombre de la Marca a Eliminar:</label>
+            <input type="text" id="delete-nombre" name="nombre" required><br>
+    
+            <button type="submit">Eliminar Marca</button>
+        </form>
+    
     <ul id="marcas-list">
         <!-- Aquí se cargarán las latas dinámicamente -->
     </ul>

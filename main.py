@@ -39,23 +39,27 @@ def get_marcas():
 
 
 @app.route('/api/latas', methods=['GET'])
-def get_latas():
+def add_lata():
+    data = request.get_json()
     try:
-        latas = Latas.query.all()
-        latas_data = []
-        for lata in latas:
-            lata_data = {
-                'id': lata.id,
-                'tamanio': lata.tamanio,
-                'precio': lata.precio,
-                'marcas': [{'id': marca.id, 'nombre': marca.nombre, 'precio_x_litro': marca.precio_x_litro} for marca in lata.marcas],
-                'colores': [{'id': color.id, 'nombre': color.nombre} for color in lata.colores]
-            }
-            latas_data.append(lata_data)
-        return jsonify({'latas': latas_data})
-    except Exception as error:
-        print("Error", error)
-        return jsonify({'message': 'Internal server error'}), 500
+        # Buscar ID de la marca
+        marca = Marca.query.filter_by(nombre=data['nombre_marca']).first()
+        if not marca:
+            return jsonify({'message': 'Marca no encontrada'}), 404
+        
+        # Buscar ID del color
+        color = Color.query.filter_by(nombre=data['nombre_color']).first()
+        if not color:
+            return jsonify({'message': 'Color no encontrado'}), 404
+        
+        # Crear nueva lata
+        nueva_lata = Latas(marca_id=marca.id, color_id=color.id, tamanio=data['tamanio'])
+        db.session.add(nueva_lata)
+        db.session.commit()
+        
+        return jsonify({'message': 'Lata agregada exitosamente'}), 201
+    except Exception as e:
+        return jsonify({'message': 'Error al agregar la lata', 'error': str(e)}), 500
 
 
 @app.route('/agregar_lata', methods=['POST'])
@@ -80,11 +84,11 @@ def agregar_lata():
 @app.route('/agregar_marca', methods=['POST'])
 def agregar_marca():
     try:
-        lata_id = request.form.get('lata_id')
+
         nombre = request.form.get('nombre')
         precio_x_litro = request.form.get('precio_x_litro')
 
-        nueva_marca = Marca(nombre=nombre, precio_x_litro=precio_x_litro, lata_id=lata_id)
+        nueva_marca = Marca(nombre=nombre, precio_x_litro=precio_x_litro)
         db.session.add(nueva_marca)
         db.session.commit()
 
@@ -93,6 +97,21 @@ def agregar_marca():
         print("Error al agregar marca:", error)
         return jsonify({'message': 'Error al agregar marca'}), 500
 
+@app.route('/eliminar_marca', methods=['POST'])
+def eliminar_marca():
+    try:
+        nombre = request.form.get('nombre')
+        marca = Marca.query.filter_by(nombre=nombre).first()
+        if not marca:
+            return jsonify({'message': 'Marca no encontrada'}), 404
+        
+        db.session.delete(marca)
+        db.session.commit()
+
+        return redirect(url_for('home'))
+    except Exception as error:
+        print("Error al eliminar marca:", error)
+        return jsonify({'message': 'Error al eliminar marca'}), 500
 
 if __name__ == '__main__':
     with app.app_context():

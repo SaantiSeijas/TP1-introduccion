@@ -5,20 +5,24 @@ db = SQLAlchemy()
 class Latas(db.Model):
     __tablename__ = 'latas'
     id = db.Column(db.Integer, primary_key=True)
+    marca_id = db.Column(db.Integer, db.ForeignKey('marcas.id'), nullable=False)
+    color_id = db.Column(db.Integer, db.ForeignKey('colores.id'), nullable=False)
     tamanio = db.Column(db.Integer, nullable=False)
     precio = db.Column(db.Integer, nullable=False)
-    marcas = db.relationship("Marca", backref="lata", lazy=True)
-    colores = db.relationship("Color", backref="lata", lazy=True)
+
+    def __init__(self, marca_id, color_id, tamanio):
+        self.marca_id = marca_id
+        self.color_id = color_id
+        self.tamanio = tamanio
+        self.precio = tamanio * Marca.query.get(marca_id).precio_x_litro
 
 class Marca(db.Model):
     __tablename__ = 'marcas'
     id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(20), nullable=False)
+    nombre = db.Column(db.String(50), nullable=False)
     precio_x_litro = db.Column(db.Integer, nullable=False)
-    lata_id = db.Column(db.Integer, db.ForeignKey('latas.id'), nullable=False)
 
 class Color(db.Model):
     __tablename__ = 'colores'
     id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(20), nullable=False)
-    lata_id = db.Column(db.Integer, db.ForeignKey('latas.id'), nullable=False)
+    nombre = db.Column(db.String(50), nullable=False)

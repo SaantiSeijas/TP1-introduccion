@@ -15,3 +15,26 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => console.error('Error al cargar las marcas:', error));
     }
 });
+
+document.getElementById('delete-marca-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const nombre = document.getElementById('delete-nombre').value;
+
+    fetch('/api/marcas/delete', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            nombre: nombre
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        if (data.message.includes('exitosamente')) {
+            location.reload();
+        }
+    })
+    .catch(error => console.error('Error al eliminar la marca:', error));
+});

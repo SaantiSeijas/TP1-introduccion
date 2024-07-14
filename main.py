@@ -104,7 +104,7 @@ def eliminar_lata():
         db.session.delete(lata)
         db.session.commit()
 
-        return jsonify({'message': 'Lata eliminada correctamente'}), 200
+        return redirect(url_for('home'))
     except Exception as error:
         print("Error al eliminar lata:", error)
         return jsonify({'message': 'Error al eliminar lata'}), 500
@@ -133,10 +133,12 @@ def eliminar_marca():
         if not marca:
             return jsonify({'message': 'Marca no encontrada'}), 404
         
+        Latas.query.filter_by(marca_id=marca.id).delete()
+
         db.session.delete(marca)
         db.session.commit()
 
-        return redirect(url_for('home'))
+        return redirect(url_for('home'))  # Redirige a la página principal o la página adecuada
     except Exception as error:
         print("Error al eliminar marca:", error)
         return jsonify({'message': 'Error al eliminar marca'}), 500

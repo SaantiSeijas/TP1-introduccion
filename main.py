@@ -83,7 +83,7 @@ def agregar_lata():
         db.session.add(nueva_lata)
         db.session.commit()
 
-        return redirect(url_for('home'))
+        return redirect(url_for('mostrar_latas', marca_id=marca_id))
     except Exception as error:
         print("Error al agregar lata:", error)
         return jsonify({'message': 'Error al agregar lata'}), 500
@@ -100,11 +100,14 @@ def eliminar_lata():
         if not lata:
             return jsonify({'message': 'Lata no encontrada'}), 404
 
+        # Obtener el marca_id antes de eliminar la lata
+        marca_id = lata.marca_id
+
         # Eliminar la lata de la sesión y commit a la base de datos
         db.session.delete(lata)
         db.session.commit()
 
-        return redirect(url_for('home'))
+        return redirect(url_for('mostrar_latas', marca_id=marca_id))
     except Exception as error:
         print("Error al eliminar lata:", error)
         return jsonify({'message': 'Error al eliminar lata'}), 500

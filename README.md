@@ -1,3 +1,10 @@
 # TP1-introduccion
 
-La idea del proyecto es crear una página web de una fábrica de pinturas, donde una persona puede elegir marca,color y tamaño a comprar
+La idea del proyecto es una página web que consta con una pagina principal donde se ve una lista de marcas que se pueden agregar y eliminar.Además en cada marca pueden agregar y eliminar latas con color y litros correspondientes
+
+
+INSTALL:
+flask
+sqlalchemy
+postgres
+

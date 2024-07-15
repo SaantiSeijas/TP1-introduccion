@@ -31,7 +31,7 @@ def agregar_lata():
     try:
         # Obtener los datos del formulario
         tamanio = int(request.form.get('tamanio'))  # Convertir tamaño a entero
-        nombre_color = request.form.get('nombre_color').lower() # Convertir a minúsculas
+        nombre_color = request.form.get('nombre_color').upper() # Convertir a minúsculas
         marca_id = int(request.form.get('marca_id'))  # Convertir marca_id a entero
 
 

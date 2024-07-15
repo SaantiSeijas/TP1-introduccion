@@ -149,7 +149,7 @@
                 <h1 id="encabezado">Inventario de Pinturería</h1>
                 <div class="editar">
                     <h2>Marcas:</h2>
-                    <ul id="marcas-list">
+                    <ul>
                     {% for marca in marcas %}
                     <li>
                         <a href="{{ url_for('mostrar_latas', marca_id=marca.id) }}">{{ marca.nombre }} - ${{ marca.precio_x_litro }} x litro</a>
@@ -169,7 +169,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="precio_x_litro" class="form-label">Precio por Litro</label>
-                                        <input type="text" id="precio_x_litro" name="precio_x_litro" required>
+                                        <input type="number" id="precio_x_litro" name="precio_x_litro" required min="0" step="any" required>
                                     </div>
                                     <button type="submit">Agregar Marca</button>
                                 </form>
@@ -194,7 +194,7 @@
             </div>
         </div>
     </div>
-    <script src="static/js/script.js"></script>
+
     <footer class="footer">
 
         <div class="logo">

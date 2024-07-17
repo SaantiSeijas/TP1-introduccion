@@ -82,8 +82,9 @@ def agregar_marca():
     try:
         nombre = request.form.get('nombre')
         precio_x_litro = request.form.get('precio_x_litro')
+        imagen_url = request.form.get('imagen_url')
 
-        nueva_marca = Marca(nombre=nombre, precio_x_litro=precio_x_litro)
+        nueva_marca = Marca(nombre=nombre, precio_x_litro=precio_x_litro, imagen_url=imagen_url)
         db.session.add(nueva_marca)
         db.session.commit()
 

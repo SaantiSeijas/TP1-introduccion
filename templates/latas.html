@@ -133,6 +133,9 @@
         <div class="row">
             <div class="col">
                 <h1 id="encabezado">Latas de la Marca {{ marca.nombre }}</h1>
+                {% if marca.imagen_url %}
+                <img src="{{ marca.imagen_url }}" alt="Imagen de {{ marca.nombre }}" class="img-fluid">
+                {% endif %}
                 <div class="col-12 col-md-10 col-lg-6 mx-auto">
                     <div class="editar">
                         <h2>Latas:</h2>

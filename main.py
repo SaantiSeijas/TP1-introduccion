@@ -12,6 +12,33 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
+colors = [
+    {'nombre': 'rojo'},
+    {'nombre': 'azul'},
+    {'nombre': 'verde'},
+    {'nombre': 'amarillo'},
+    {'nombre': 'negro'},
+    {'nombre': 'blanco'},
+    {'nombre': 'gris'},
+    {'nombre': 'marron'},
+    {'nombre': 'naranja'},
+    {'nombre': 'rosa'},
+    {'nombre': 'celeste'},
+    # Agrega más colores si es necesario
+]
+
+
+def cargar_colores():
+    existing_colors = {color.nombre for color in Color.query.all()}
+    new_colors = [Color(**color) for color in colors if color['nombre'] not in existing_colors]
+
+    if new_colors:
+        db.session.add_all(new_colors)
+        db.session.commit()
+        print(f"{len(new_colors)} colores cargados.")
+    else:
+        print("Todos los colores ya están cargados.")
+
 
 @app.route('/')
 def home():
@@ -130,4 +157,5 @@ def eliminar_marca():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
+        cargar_colores()
     app.run(port=port, debug=True)

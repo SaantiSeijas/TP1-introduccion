@@ -117,6 +117,19 @@
             background-color: #5a6268;
         }
 
+        .img-fluid {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        ul li[style*="background-color: white;"],
+        ul li[style*="background-color: yellow;"],
+        ul li[style*="background-color: lightgray;"],
+        ul li[style*="background-color: lightyellow;"] {
+        color: #000;
+        }
+
         @media (max-width: 768px) {
             .container {
                 width: 95%;
@@ -141,7 +154,8 @@
                         <h2>Latas:</h2>
                         <ul>
                             {% for lata in latas %}
-                                <li>Nro de lata: {{ lata.id }} - Tamaño: {{ lata.tamanio }}L - Precio: ${{ lata.precio }} - Color: {{ lata.color.nombre }}</li>
+                            <li li style="background-color: {{ color_map[lata.color.nombre] | default('white') }};">
+                                Nro de lata: {{lata.id}} - Tamaño: {{ lata.tamanio }}L - Precio: ${{ lata.precio }} - Color: {{ lata.color.nombre }}
                             {% endfor %}
                         </ul>
                     </div>

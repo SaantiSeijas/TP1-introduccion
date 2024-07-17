@@ -23,7 +23,21 @@ def home():
 def mostrar_latas(marca_id):
     marca = Marca.query.get_or_404(marca_id)
     latas = Latas.query.filter_by(marca_id=marca_id).all()
-    return render_template('latas.html', marca=marca, latas=latas)
+    color_map = {
+        'rojo': 'red',
+        'azul': 'blue',
+        'verde': 'green',
+        'amarillo': 'yellow',
+        'negro': 'black',
+        'blanco': 'white',
+        'gris': 'grey',
+        'marron': 'brown',
+        'naranja': 'orange',
+        'rosa': 'pink',
+        'celeste': 'sky blue',
+        
+    }
+    return render_template('latas.html', marca=marca, latas=latas, color_map=color_map)
 
 
 @app.route('/agregar_lata', methods=['POST'])
@@ -31,7 +45,7 @@ def agregar_lata():
     try:
         # Obtener los datos del formulario
         tamanio = int(request.form.get('tamanio'))  # Convertir tamaño a entero
-        nombre_color = request.form.get('nombre_color').upper() # Convertir a minúsculas
+        nombre_color = request.form.get('nombre_color').lower() # Convertir a minúsculas
         marca_id = int(request.form.get('marca_id'))  # Convertir marca_id a entero
 
 

@@ -14,16 +14,17 @@ db.init_app(app)
 
 colors = [
     {'nombre': 'rojo'},
-    {'nombre': 'azul'},
     {'nombre': 'verde'},
-    {'nombre': 'amarillo'},
+    {'nombre': 'azul'},
+    {'nombre': 'violeta'},
+    {'nombre': 'naranja'},
     {'nombre': 'negro'},
     {'nombre': 'blanco'},
-    {'nombre': 'gris'},
     {'nombre': 'marron'},
-    {'nombre': 'naranja'},
+    {'nombre': 'gris'},
     {'nombre': 'rosa'},
     {'nombre': 'celeste'},
+    {'nombre': 'amarillo'},
     # Agrega más colores si es necesario
 ]
 
@@ -153,7 +154,42 @@ def eliminar_marca():
         print("Error al eliminar marca:", error)
         return jsonify({'message': 'Error al eliminar marca'}), 500
 
+@app.route('/editar_marca', methods=['POST'])
+def editar_marca():
+    try:
+        # Obtener los datos del formulario
+        nombre = request.form.get('nombre')
+        nuevo_precio_x_litro = float(request.form.get('precio_x_litro'))
+        imagen_url = request.form.get('imagen_url')
 
+        # Buscar la marca por su nombre
+        marca = Marca.query.filter_by(nombre=nombre).first()
+        if not marca:
+            return jsonify({'message': 'Marca no encontrada'}), 404
+
+         # Obtener el precio actual por litro
+        precio_anterior = marca.precio_x_litro
+
+        # Actualizar los datos de la marca si se proporcionan nuevos valores
+        if nuevo_precio_x_litro:
+            marca.precio_x_litro = nuevo_precio_x_litro
+            
+            # Actualizar el precio de las latas de esta marca
+            latas = Latas.query.filter_by(marca_id=marca.id).all()
+            for lata in latas:
+                lata.precio = lata.tamanio * nuevo_precio_x_litro
+                
+        if imagen_url:
+            marca.imagen_url = imagen_url
+
+        # Commit a la base de datos
+        db.session.commit()
+
+        return redirect(url_for('home'))
+    except Exception as error:
+        print("Error al editar marca:", error)
+        return jsonify({'message': 'Error al editar marca'}), 500
+    
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

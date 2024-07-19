@@ -177,23 +177,25 @@ def eliminar_marca():
         return jsonify({'message': 'Error al eliminar marca'}), 500
 
 
-@app.route('/editar_marca', methods=['POST'])
-def editar_marca():
+@app.route('/editar_marca/<int:marca_id>', methods=['GET'])
+def mostrar_editar_marca(marca_id):
+    marca = Marca.query.get_or_404(marca_id)
+    return render_template('editarmarca.html', marca=marca)
+
+
+@app.route('/editar_marca/<int:marca_id>', methods=['POST'])
+def editar_marca(marca_id):
     try:
         # Obtener los datos del formulario
         nombre = request.form.get('nombre')
         nuevo_precio_x_litro = float(request.form.get('precio_x_litro'))
         imagen_url = request.form.get('imagen_url')
 
-        # Buscar la marca por su nombre
-        marca = Marca.query.filter_by(nombre=nombre).first()
-        if not marca:
-            return jsonify({'message': 'Marca no encontrada'}), 404
+        # Buscar la marca por su id
+        marca = Marca.query.get_or_404(marca_id)
 
-         # Obtener el precio actual por litro
-        precio_anterior = marca.precio_x_litro
-
-        # Actualizar los datos de la marca si se proporcionan nuevos valores
+        # Actualizar los datos de la marca
+        marca.nombre = nombre
         if nuevo_precio_x_litro:
             marca.precio_x_litro = nuevo_precio_x_litro
             
@@ -201,7 +203,7 @@ def editar_marca():
             latas = Latas.query.filter_by(marca_id=marca.id).all()
             for lata in latas:
                 lata.precio = lata.tamanio * nuevo_precio_x_litro
-                
+            
         if imagen_url:
             marca.imagen_url = imagen_url
 

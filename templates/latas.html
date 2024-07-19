@@ -29,6 +29,29 @@
             list-style-type: none;
             padding: 0;
         }
+        
+        .resumen h2{
+            text-align: center;
+            list-style-type: none;
+            padding: 5;
+            color: #c99b95;
+        }
+
+        .resumen ul {
+            text-align: center;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .resumen ul li {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #c99b95;
+        }
 
         .editar ul li {
             background-color: #1e1e1e;
@@ -36,6 +59,7 @@
             padding: 10px;
             margin-bottom: 10px;
             border-radius: 5px;
+            font-weight: bold;
         }
 
         .card {
@@ -60,7 +84,7 @@
         .footer .footer-content {
             display: flex;
             align-items: center;
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 0 10px;
         }
@@ -69,10 +93,14 @@
             flex-direction: column;
         }
 
-        .footer .derechos,
+        .footer .derechos{
+            text-align: center;
+            margin-left: 50%;
+        }
         .footer .contacto,
         .footer .lugar {
             margin-bottom: 10px;
+            margin-left:10% ;
         }
 
         .footer .logo {
@@ -80,7 +108,7 @@
         }
 
         .footer img {
-            max-width: 1000px;  /* Ajusta el tamaño de la imagen según sea necesario */
+            max-width: 1000px;
         }
 
         .formulario {
@@ -166,6 +194,24 @@
                 {% if marca.imagen_url %}
                 <img src="{{ marca.imagen_url }}" alt="Imagen de {{ marca.nombre }}" class="img-fluid">
                 {% endif %}
+                <div class="resumen">
+                    <h2>Resumen del stock de {{ marca.nombre }}:</h2>
+                    <ul>
+                        <li>*El total de litros de la marca "{{ marca.nombre}}" de todas sus latas es: {{ total_litros }}L</li>
+                        <li>*La cantidad total de latas de {{ marca.nombre}} es: {{ total_latas }} latas</li>
+                        <li>*El precio total de todas las latas de "{{ marca.nombre}}" es:  ${{ total_precio }}</li>
+                        <li>{% if colores_max_litros %}
+                            *Los colores con más litros son: 
+                            {% for color in colores_max_litros %}
+                                {{ color }} ({{ litros_max_litros }}L)
+                                {% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                            
+                        {% else %}
+                            No hay latas disponibles para esta marca.
+                        {% endif %}</li>
+                    </ul>
+                </div>
                 <div class="col-12 col-md-10 col-lg-6 mx-auto">
                     <div class="editar">
                         <h2>Latas:</h2>
@@ -230,7 +276,7 @@
                 </div>
             </div>
             <div class="logo">
-                <img src="static/images/1logo.png" alt="Logo de la empresa">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo de la empresa">
             </div>
         </div>
     </footer>

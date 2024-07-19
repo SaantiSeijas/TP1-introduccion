@@ -25,7 +25,6 @@ colors = [
     {'nombre': 'rosa'},
     {'nombre': 'celeste'},
     {'nombre': 'amarillo'},
-    # Agrega más colores si es necesario
 ]
 
 
@@ -51,6 +50,29 @@ def home():
 def mostrar_latas(marca_id):
     marca = Marca.query.get_or_404(marca_id)
     latas = Latas.query.filter_by(marca_id=marca_id).all()
+
+    # Calcular la cantidad total de litros y la cantidad total de latas
+    total_litros = sum(lata.tamanio for lata in latas)
+    total_latas = len(latas)
+
+     # Calcular el precio total de todas las latas de la marca
+    total_precio = total_litros * marca.precio_x_litro
+
+    colores_max_litros = []
+    litros_max_litros = 0
+
+    if latas:
+        # Calcular el color con más litros
+        colores = {}
+        for lata in latas:
+            if lata.color.nombre not in colores:
+                colores[lata.color.nombre] = 0
+            colores[lata.color.nombre] += lata.tamanio
+
+        max_litros = max(colores.values())
+        colores_max_litros = [color for color, litros in colores.items() if litros == max_litros]
+        litros_max_litros = max_litros
+
     color_map = {
         'rojo': 'red',
         'azul': 'blue',
@@ -63,9 +85,9 @@ def mostrar_latas(marca_id):
         'naranja': 'orange',
         'rosa': 'pink',
         'celeste': 'sky blue',
-        
     }
-    return render_template('latas.html', marca=marca, latas=latas, color_map=color_map)
+
+    return render_template('latas.html', marca=marca, latas=latas, total_litros=total_litros, total_latas=total_latas, total_precio=total_precio, colores_max_litros=colores_max_litros, litros_max_litros=litros_max_litros, color_map=color_map)
 
 
 @app.route('/agregar_lata', methods=['POST'])
@@ -154,6 +176,7 @@ def eliminar_marca():
         print("Error al eliminar marca:", error)
         return jsonify({'message': 'Error al eliminar marca'}), 500
 
+
 @app.route('/editar_marca', methods=['POST'])
 def editar_marca():
     try:
@@ -190,6 +213,7 @@ def editar_marca():
         print("Error al editar marca:", error)
         return jsonify({'message': 'Error al editar marca'}), 500
     
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

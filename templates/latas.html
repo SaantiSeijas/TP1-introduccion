@@ -168,10 +168,13 @@
             margin-bottom: 20px;
         }
 
-        ul li[style*="background-color: white;"],
-        ul li[style*="background-color: yellow;"],
-        ul li[style*="background-color: lightgray;"],
-        ul li[style*="background-color: lightyellow;"] {
+        ul li[style*="background-color: #FFFFFF;"],/*blanco*/
+        ul li[style*="background-color: #FFFF00;"],/*amarillo*/
+        ul li[style*="background-color: #FFD700;"],/*dorado*/
+        ul li[style*="background-color: #C0C0C0;"],/*plateado*/
+        ul li[style*="background-color: #DDA0DD;"],/*azul cielo*/
+        ul li[style*="background-color: #FFC0CB;"],/*ciruela*/
+        ul li[style*="background-color: #87CEEB"]/*rosa*/ {
         color: #000;
         }
 
@@ -197,7 +200,7 @@
                 <div class="resumen">
                     <h2>Resumen del stock de {{ marca.nombre }}:</h2>
                     <ul>
-                        <li>*El total de litros de la marca "{{ marca.nombre}}" de todas sus latas es: {{ total_litros }}L</li>
+                        <li>*El total de litros de la marca "{{ marca.nombre}}" es: {{ total_litros }}L</li>
                         <li>*La cantidad total de latas de {{ marca.nombre}} es: {{ total_latas }} latas</li>
                         <li>*El precio total de todas las latas de "{{ marca.nombre}}" es:  ${{ total_precio }}</li>
                         <li>{% if colores_max_litros %}

@@ -1,6 +1,6 @@
 # Inventario de Pinturería
 
-Este es un proyecto de gestión de inventario para una pinturería, desarrollado con Flask y PostgreSQL. La aplicación permite administrar marcas de pintura y sus respectivas latas, incluyendo funcionalidades para agregar y eliminar marcas y latas.
+Este es un proyecto de gestión de inventario para una pinturería, desarrollado con Flask y PostgreSQL. La aplicación permite administrar marcas de pintura y sus respectivas latas, incluyendo funcionalidades para agregar, modificar y eliminar marcas. Ademas, se puede agregar y eliminar latas
 
 ## Tabla de Contenidos
 
@@ -14,7 +14,7 @@ Este es un proyecto de gestión de inventario para una pinturería, desarrollado
 ## Características
 
 - Listar marcas y latas.
-- Agregar y eliminar marcas.
+- Agregar, modificar y eliminar marcas.
 - Agregar y eliminar latas.
 - Validación de datos en el cliente y el servidor.
 - Interfaz de usuario en modo oscuro.
@@ -74,11 +74,15 @@ Este es un proyecto de gestión de inventario para una pinturería, desarrollado
 
 ### Página Principal
 
-En la página principal se listan todas las marcas disponibles junto con su precio por litro.
+Al ejecutarse 'main.py' se cargara en la tabla 'colores' todos los colores disponibles. En la página principal se listan todas las marcas disponibles junto con su precio por litro.
 
 ### Agregar Marca
 
 Rellena el formulario en la página principal para agregar una nueva marca.
+
+### Modificar Marca
+
+Se redirige a un nuevo template, rellena el formulario para modificar una marca existente. La informacion de la marca pre-modificacion estara cargada (por defecto) en los inputs.
 
 ### Eliminar Marca
 
@@ -105,6 +109,7 @@ inventario-pintureria/
 ├── templates/
 │   ├── index.html
 │   ├── latas.html
+│   ├── editarmarca.html
 ├── static/
 │   ├── images/
 │       └── logo.png

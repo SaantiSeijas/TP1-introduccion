@@ -160,6 +160,8 @@ def agregar_lata():
         return jsonify({'message': 'Error al agregar lata'}), 500
 
 
+#Para que Flask reconozca el método DELETE a través del formulario, se necesita usar un middleware o método que interprete el campo _method en el formulario
+#Como eso no lo vimos en clase, se opto por utilizar post, aunque no siga estrictamente todas las convenciones de diseño de RESTful.
 @app.route('/eliminar_lata', methods=['POST'])
 def eliminar_lata():
     try:
@@ -201,6 +203,8 @@ def agregar_marca():
         return jsonify({'message': 'Error al agregar marca'}), 500
 
 
+#Para que Flask reconozca el método DELETE a través del formulario, se necesita usar un middleware o método que interprete el campo _method en el formulario
+#Como eso no lo vimos en clase, se opto por utilizar post, aunque no siga estrictamente todas las convenciones de diseño de RESTful.
 @app.route('/eliminar_marca', methods=['POST'])
 def eliminar_marca():
     try:
@@ -226,6 +230,8 @@ def mostrar_editar_marca(marca_id):
     return render_template('editarmarca.html', marca=marca)
 
 
+#Aca usar PUT es más adecuado para seguir las convenciones RESTful, pero requiere el uso de JavaScript.
+#A pesar de esto, nuestra aplicación está basada en formularios HTML y no está utilizando JavaScript para enviar las solicitudes, por lo tanto es mas conveniete usar POST.
 @app.route('/editar_marca/<int:marca_id>', methods=['POST'])
 def editar_marca(marca_id):
     try:
